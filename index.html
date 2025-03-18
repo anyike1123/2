@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="30">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="dashboard">
+        <!-- 动态表格 -->
+        <table id="signalTable">
+            <thead>
+                <tr>
+                    <th>币种</th>
+                    <th>周期</th>
+                    <th>方向</th>
+                    <th>入场价</th>
+                    <th>止损价</th>
+                    <th>止盈价</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($final_signals as $coin => $tfs): ?>
+                <?php foreach($tfs as $tf => $sig): ?>
+                <tr class="<?= $sig['direction']>0 ? 'bull' : 'bear' ?>">
+                    <td><?= $coin ?></td>
+                    <td><?= $tf ?></td>
+                    <td><?= $sig['direction']>0 ? '做多' : '做空' ?></td>
+                    <td><?= number_format($sig['entry'],4) ?></td>
+                    <td><?= number_format($sig['sl'],4) ?></td>
+                    <td><?= number_format($sig['tp'],4) ?></td>
+                </tr>
+                <?php endforeach; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        
+        <!-- 指标图表 -->
+        <div id="indicatorChart"></div>
+    </div>
+    
+    <style>
+        .bull { background: #d4f7d4; }
+        .bear { background: #ffd4d4; }
+        table { border-collapse: collapse; }
+        td, th { padding: 8px; border: 1px solid #ddd; }
+    </style>
+</body>
+</html>
